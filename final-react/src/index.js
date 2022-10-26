@@ -1,11 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import AuthLogic from './components/service/authLogic';
+import firebaseApp from "./components/service/firebase";
+import "@fortawesome/fontawesome-free/js/all.js";
 
+const authLogic = new AuthLogic(firebaseApp);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App authLogic={authLogic} />
+      {/* <App /> */}
+      {/* <CartApp /> */}
+    </BrowserRouter>
   </React.StrictMode>
 );
 
