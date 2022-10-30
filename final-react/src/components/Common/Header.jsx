@@ -1,99 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Container, Nav, NavDropdown, Form, Button } from 'react-bootstrap';
+import { Navbar, Container, Button, Nav, Form } from 'react-bootstrap';
+import TabCards from '../main/TabCards';
 import { Link, useNavigate } from 'react-router-dom';
+import data from '../../data.js'
 
 const Header = () => {
-
+  let [ tab, setTab ] = useState(0); // 0이면 0번째 내용 보이게, 1이면 1번째 내용 ...
+  let [fade, setFade] = useState('')
+  let [padset, setPadset] = useState(data)
+  useEffect(() => {
+    // fade 변수 자리에 claaName 'end'를 탈부착 (css)
+    // 부착만 하면 안되고, 뗐다가 부착해야 애니메이션이 보임
+    // 따라서 cleanUp Function + setTimeout 사용하기!
+    setTimeout(() => {
+      setFade('end');
+      console.log("setTimeout")
+    }, 100) // 0.1 초뒤에 실행
+  
+    // useEffect 실행 전에 실행됨
+    return () => {
+      setFade('');
+      console.log("return");
+      }
+    }, [tab])
+  
   /* 
     useNavigate 라는 훅 -> 페이지 이동을 도와주는 함수를 담고 잇음.
     보통 변수에 담아서 사용함 
   */
   let navigate = useNavigate();
-
+  const sellerMoon = () => {
+    console.log("에휴");
+  }
+  const logout = () => {
+    console.log("에휴");
+  }
   return (
     <>
-      <Navbar expand="lg" className="first-nav">
+      <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand>
-            <Link to="/">
-              <img src="https://res.cloudinary.com/drxxdsv01/image/upload/v1666376791/logo6_tqrfva.png" alt="logo" />
-            </Link>
-          </Navbar.Brand>
+          <Navbar.Brand href="/statics">월간;문</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-            <Form className="d-flex" id="search-container">
-              <Form.Control
-                id="keyword"
-                type="search"
-                placeholder="통합검색"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button id="nav-icon">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </Button>
-            </Form>
-            <div className="nav-btn-container">
-              <button className="btn position-relative" id="nav-btn"
-                      onClick={()=>{ navigate('/cart') }}> {/* 장바구니 이동 */}
-                <i className="fa-solid fa-cart-shopping" id="nav-icon"></i> 
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  2
-                  <span className="visually-hidden">unread messages</span>
-                </span>
-              </button>
-              <button className="btn position-relative" id="nav-btn"
-                      onClick={()=>{ navigate('/memo') }}> {/* 쪽지 이동 */}
-                <i className="fa-solid fa-envelope" id="nav-icon"></i> 
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  1
-                  <span className="visually-hidden">unread messages</span>
-                </span>
-              </button>
-              <button className="btn position-relative"
-                      onClick={()=>{ navigate('/login') }}> {/* 로그인,회원가입 이동 */}
-                <i className="fa-solid fa-user" id="nav-icon"></i> 
-              </button>
-
-            </div>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-
-      {/* ################################[[ 아래부터 메뉴바 ]]################################## */}
-
-      <Navbar className="second-nav">
-        <Container>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
-            <Nav>
-              {/* <Nav.Link className="nav-menu" onClick={()=>{ navigate('/store') }}>정기구독</Nav.Link> */}
-              
-              <NavDropdown title="Monthly-Moon" id="basic-nav-dropdown" className="nav-menu">
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>정기구독</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>체험팩</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>기업구매</NavDropdown.Item>
-              </NavDropdown>
-
-              <NavDropdown title="Store" id="basic-nav-dropdown" className="nav-menu">
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>전체상품</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>생리대</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>탐폰</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>굿즈</NavDropdown.Item>
-              </NavDropdown>
-
-              <NavDropdown title="Moon Story" id="basic-nav-dropdown" className="nav-menu">
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>커뮤니티</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>쪽지</NavDropdown.Item>
-              </NavDropdown>
-
-              <NavDropdown title="Customer" id="basic-nav-dropdown" className="nav-menu">
-                <NavDropdown.Item onClick={()=>{ navigate('/notice')}}>공지사항</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=>{ navigate('/')}}>FAQ</NavDropdown.Item>
-              </NavDropdown>
-
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Link to="/statics" className="nav-link">통계 관리</Link>
+              <Link to="/customer" className="nav-link">회원 관리</Link>
+              <Link to="/md" className="nav-link">상품 관리</Link>
+              <Link to="/order" className="nav-link">주문 관리</Link>
+              <Link to="/board" className="nav-link">게시판 관리</Link>
+              <Link to="/store" className="nav-link">거래처 관리</Link>
             </Nav>
+            <Button className="nav-link px-3" onClick={sellerMoon}>회원용 사이트로 이동하기</Button>
+            <Button className="nav-link px-3" onClick={logout}>로그아웃</Button>
+            {/* {onLogout && (<Button variant="primary" onClick={()=>{logout2(auth); window.location.reload();}}>Logout</Button>)} */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

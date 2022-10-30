@@ -64,20 +64,6 @@ body {
   margin-right: 3rem;
 }
 
-/* 이벤트alert */
-#event-alert {
-  text-align: center;
-}
-
-/* *********** [[탭애니메이션]] ************* */
-.start {
-  opacity: 0;
-}
-.end {
-  opacity: 1;
-  transition: opacity 0.5s;
-}
-
 /* ###################################################################### */
 
 
@@ -85,10 +71,12 @@ body {
 
 /* ##############################[[Notice]]##################################### */
 
-.list-wrapper {
-  width: 1020px;
-  height: 100%;
-  margin-top: 10px;
+.body_container {
+  margin: 2rem;
+}
+
+li {
+  list-style: none;
 }
 
 table {
