@@ -51,8 +51,8 @@ const Header = () => {
               <Link to="/board" className="nav-link">게시판 관리</Link>
               <Link to="/store" className="nav-link">거래처 관리</Link>
             </Nav>
-            <Button className="nav-link px-3" onClick={sellerMoon}>회원용 사이트로 이동하기</Button>
-            <Button className="nav-link px-3" onClick={logout}>로그아웃</Button>
+            <Button className="btn btn-light btn-outline-secondary px-3" onClick={sellerMoon}>회원용 사이트로 이동하기</Button>&nbsp;
+            <Button className="btn btn-light btn-outline-secondary px-3" onClick={logout}>로그아웃</Button>
             {/* {onLogout && (<Button variant="primary" onClick={()=>{logout2(auth); window.location.reload();}}>Logout</Button>)} */}
           </Navbar.Collapse>
         </Container>

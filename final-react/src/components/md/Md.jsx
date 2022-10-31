@@ -2,15 +2,22 @@ import React from 'react';
 import Footer from '../Common/Footer';
 import Header from '../Common/Header';
 import DatePicker from "react-datepicker";
+import { Button } from 'react-bootstrap';
 
 const Md = (props) => {
+  const reset = () => {
+    console.log("선택 초기화");
+  }
+  const search = () => {
+    console.log("검색");
+  }
   return (
     <>
       <Header />
         <div className="body_container">
           <h4>상품 관리 페이지</h4>
           <div className="tb_search">
-            <table>
+            <table style={{width: '100%', marginBottom: 10}}>
               <tbody>
                 <tr>
                   <th className="bdb bdr">검색</th>
@@ -37,10 +44,14 @@ const Md = (props) => {
                 </tr>
               </tbody>
             </table>
+            <div className="d-flex justify-content-end">
+              <Button className="btn btn-light btn-outline-secondary px-3" onClick={reset}>초기화</Button>&nbsp;
+              <Button className="btn btn-light btn-outline-secondary px-3" onClick={search}>검색</Button>
+            </div>
           </div>
           <div className="tb_list">
             <h4>상품 목록</h4>
-            <table>
+            <table style={{width: '100%', marginBottom: 10}}>
               <tbody>
                 <tr>
                   <th className="bdr">

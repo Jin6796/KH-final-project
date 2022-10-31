@@ -8,11 +8,11 @@ const Main = () => {
 
   return (
     <>
-      {/* <Login /> */}
-      <Header />
+      <Login />
+      {/* <Header />
       <CONTAINER_TAB>
       </CONTAINER_TAB>
-      <Footer />
+      <Footer /> */}
       
     </>
   );

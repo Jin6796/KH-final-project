@@ -24,7 +24,7 @@ const Customer = (props) => {
           <h4>회원 관리 페이지</h4>
           {/* 검색 시작 */}
           <div className="tb_search">
-            <table>
+            <table style={{width: '100%', marginBottom: 10}}>
               <tbody>
                 <tr>
                   <th className="bdb bdr">검색</th>
@@ -61,18 +61,16 @@ const Customer = (props) => {
                 </tr>
               </tbody>
             </table>
-            <div className="btn_rb">
-              <ul style={{ display: 'inline'}}>
-                <li><Button className="AXButton" onClick={reset}>초기화</Button></li>&nbsp;
-                <li><Button className="AXButton" onClick={search}>검색</Button></li>
-              </ul>
+            <div className="d-flex justify-content-end">
+              <Button className="btn btn-light btn-outline-secondary px-3" onClick={reset}>초기화</Button>&nbsp;
+              <Button className="btn btn-light btn-outline-secondary px-3" onClick={search}>검색</Button>
             </div>
           </div>
           {/* 검색 끝 */}
 
           <div className="tb_list">
             <h4>회원 목록</h4>
-            <table>
+            <table style={{width: '100%', marginBottom: 10}}>
               <tbody>
                 <tr>
                   <th className="bdr">
@@ -80,9 +78,8 @@ const Customer = (props) => {
                   </th>
                   <th className="bdr">회원번호</th>
                   <th className="bdr">회원등급</th>
-                  <th className="bdr">아이디</th>
                   <th className="bdr">이름</th>
-                  <th className="bdr">이메일</th>
+                  <th className="bdr">아이디</th>
                   <th className="bdr">연락처</th>
                   <th className="bdr">가입일</th>
                 </tr>
@@ -96,7 +93,7 @@ const Customer = (props) => {
           <div className="btn_side">
             <p className="right">
               <span>
-                <Button onClick={SendMail}>선택 메일 발송</Button>
+                <Button className="btn btn-light btn-outline-secondary px-3" onClick={SendMail}>선택 메일 발송</Button>
               </span>
             </p>
           </div>
