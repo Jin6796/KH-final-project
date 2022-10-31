@@ -1,10 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Main from './pages/Main';
+import Main from './components/pages/Main';
 import "./App.css"
-import Notice from './pages/Notice';
 import axios from "axios"
-import NoticeDetail from './pages/NoticeDetail';
 import Statics from "./components/statics/Statics";
 import Customer from "./components/customer/Customer";
 import Md from "./components/md/Md";
@@ -17,9 +15,9 @@ function App() {
     <>
       <Routes>
 
-        <Route path="" element={<Main />}/> {/* 404페이지 */}
+        <Route path="" element={<Main />}/>
         
-        <Route path="/statics" element={<Statics />}/> {/* 404페이지 */}
+        <Route path="/statics" element={<Statics />}/>
 
         <Route path="/customer" element={<Customer />}/>
         
