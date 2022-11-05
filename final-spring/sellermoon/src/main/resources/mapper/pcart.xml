@@ -2,16 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kh.mybatis.mapper.pcartMapper">
 
-	<resultMap type="kh.sellermoon.member.vo.CartVO" id="cartMap">
+<!-- 	<resultMap type="kh.sellermoon.member.vo.CartVO" id="cartMap">
 		<id property="cartNo" column="cart_no"/>
 		<result property="memberNo"     column="member_no"/>
 		<result property="mdNo"         column="md_no"/>
 		<result property="cartQuantity" column="cart_quantity"/>
 		<result property="orderType"    column="order_type"/>
-	</resultMap> 
+	</resultMap>  -->
+<resultMap type="java.util.Map" id="pcartMap"></resultMap>
 
-	<select id="getAllPCartList" resultType="kh.sellermoon.member.vo.CartVO" parameterType="int">
-		select 'cart' as order_type from tb_cart
+	<select id="getAllPCartList" resultType="java.util.Map" parameterType="map">
+		select cart_no,member_no,md_no,cart_quantity,order_type from tb_cart
+		<where>
+		<if test="cart_no>0">
+		and cart_no=#{cart_no}
+		</if>
+		</where>
 	</select>
 
 	<select id="getPCart" resultType="String">

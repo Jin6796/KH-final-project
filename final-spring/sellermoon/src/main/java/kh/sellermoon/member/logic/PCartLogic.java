@@ -14,7 +14,6 @@ import kh.sellermoon.member.dao.PCartDao;
 import kh.sellermoon.member.dao.ProductDao;
 import kh.sellermoon.member.vo.CartVO;
 import kh.sellermoon.member.vo.MdVO;
-import kh.sellermoon.member.vo.MemberVO;
 
 @Service
 public class PCartLogic {
@@ -23,9 +22,25 @@ public class PCartLogic {
 	@Autowired
 	private PCartDao pCartDao;
 	
-	public CartVO getAllCartList(MemberVO mVO) throws Exception {
-		return pCartDao.getAllCarts(mVO);
+	
+	  //public List<Map<String, Object>> pCartlist(Map<String, Object> pMap) {
+	//	  logger.info("pointList 호출 성공");
+	 //     List<Map<String, Object>> pointList = null;
+	 //     pointList = pCartDao.pCartlist(pMap);
+	 //     return pCartlist;
+	//   }
+
+
+	public List<Map<String, Object>> pCartlist(Map<String, Object> pMap) {
+		 logger.info("pointList 호출 성공");
+	      List<Map<String, Object>> pCartlist = null;
+	      pCartlist = pCartDao.pCartlist(pMap);
+	      return pCartlist;
 	}
+	  
+	//public List<CartVO> getAllCartList(int no) throws Exception {
+	//	return pCartDao.getAllCarts(no);
+	//}
 	
 
 }

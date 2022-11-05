@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import kh.sellermoon.member.vo.CartVO;
 import kh.sellermoon.member.vo.MdVO;
-import kh.sellermoon.member.vo.MemberVO;
+import org.apache.logging.log4j.LogManager;
 
 @Service
 public class PCartDao {
@@ -21,9 +21,19 @@ public class PCartDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	public CartVO getAllCarts(MemberVO mVO) {
-		return (CartVO) sqlSessionTemplate.selectList("getAllPCartList", mVO);
-	}
-
 	
+	public List<Map<String, Object>> pCartlist(Map<String, Object> pMap) {
+	      logger.info(pMap.get("cart_no")+"");
+	      
+	      List<Map<String, Object>> pCartlist = null;
+	      pCartlist = sqlSessionTemplate.selectList("getAllPCartList",pMap);
+	         logger.info("pMap : "+pMap);
+	         return pCartlist;
+	   }
+	   
+	//public List<CartVO> getAllCarts(int no) {
+	//	List<CartVO> list = sqlSessionTemplate.selectList("getAllPCartList", no);
+	//	logger.info("P-CART "+  list);
+	//	return list;
+	//}
 }

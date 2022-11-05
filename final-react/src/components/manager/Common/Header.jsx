@@ -40,7 +40,7 @@ const Header = () => {
     <>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="/statics">월간;문</Navbar.Brand>&nbsp;&nbsp;&nbsp;
+          <Navbar.Brand href="/astatics">월간;문</Navbar.Brand>&nbsp;&nbsp;&nbsp;
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

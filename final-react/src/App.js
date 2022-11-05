@@ -15,7 +15,7 @@ import LoginPage from "./components/member/login/LoginPage";
 import Products from "./components/member/product/Products";
 import ProductDetail from "./components/member/product/ProductDetail";
 
-function App() {
+const App = ({ pictureUpload }) => {
   return (
     <>
       <Routes>
@@ -26,7 +26,12 @@ function App() {
 
         <Route path="/amember" element={<Customer />}/>
         
-        <Route path="/amd" element={<Amd />} />
+        <Route path="/amd" 
+              element={<Amd
+                            pictureUpload={pictureUpload}
+                          />
+} 
+        />
 
         <Route path="/aorder" element={<Order />} />
 

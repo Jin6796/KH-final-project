@@ -1,6 +1,7 @@
 package kh.sellermoon.member.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,38 +32,56 @@ import kh.util.HashMapBinder;
 public class RestCartController {
 	Logger logger = LogManager.getLogger(RestCartController.class);
 
-	@Autowired
-	private CartLogic cartLogic;
+	/*
+	 * @Autowired private CartLogic cartLogic;
+	 */
 	
 	@Autowired
 	private PCartLogic pCartLogic;
-	
-	
-	@GetMapping("jsonList")
-	public String getAllCartList(HttpServletRequest req, MemberVO mVO) {
-		String result = "";
-		try {
-			HttpSession session = req.getSession();
-			// 리액트 로그인 오류 해결 이후 해당 구문 주석 해제
-			//MemberVO member = (MemberVO)session.getAttribute("member");
-			//logger.info("member: " + member);
-			//int memberNo = member.getMember_no();
-			int memberNo = 1;
-			mVO.setMember_no(memberNo);
-			CartVO cartList =  pCartLogic.getAllCartList(mVO);
-			logger.info("cartList: " +cartList);
-			
-			Gson g = new Gson();
-			result =  g.toJson(cartList);
-		
-		}catch (Exception e) {
-			logger.error("error : " +	e.getStackTrace());
-			logger.error("error msg : " +	e.getMessage());
-		}
-		
-		return result;
-	}
 
+	
+	
+	
+	
+	   @GetMapping("pCartlist")
+	   public String pCartlist(Model model, @RequestParam Map<String, Object> pMap) {
+	      logger.info("pCartlist 호출 성공");
+	      
+	      List<Map<String, Object>> pCartlist = null;
+	      pCartlist = pCartLogic.pCartlist(pMap);
+	      logger.info(pCartlist);
+	      String temp = null;
+	      Gson g = new Gson();
+	      temp = g.toJson(pCartlist);
+	      return temp;
+	   }
+}
+
+	//@GetMapping("jsonList")
+		//public String getAllCartList(HttpServletRequest req) {
+		//	String result = "";
+		//	try {
+		//		HttpSession session = req.getSession();
+		//		// 리액트 로그인 오류 해결 이후 해당 구문 주석 해제
+		//		//MemberVO member = (MemberVO)session.getAttribute("member");
+		//		//logger.info("member: " + member);
+		//		//int memberNo = member.getMember_no();
+		//		int memberNo = 1;
+		//		List<CartVO> cartList =  pCartLogic.getAllCartList(memberNo);
+		//		logger.info("cartList size: " +cartList.size());
+		//		logger.info("cartList: " +cartList);
+		//		
+		//		Gson g = new Gson();
+		//		result =  g.toJson(cartList);
+		//	
+		//	}catch (Exception e) {
+		//		logger.error("error : " +	e.getStackTrace());
+		//		logger.error("error msg : " +	e.getMessage());
+		//	}
+		//	
+		//	return result;
+		//}
+	
 //	@GetMapping("jsonList")
 //	public String CartList(@RequestParam Map<String, Object> pMap) {
 //		logger.info("jsonCartList 호출 성공" + pMap);
@@ -94,4 +113,4 @@ public class RestCartController {
 	 * (Exception e) { e.printStackTrace(); } } result = cartLogic.cartInsert(pMap);
 	 * return String.valueOf(result); }
 	 */
-}
+
