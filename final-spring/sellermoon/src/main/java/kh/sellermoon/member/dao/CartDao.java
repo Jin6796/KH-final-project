@@ -10,18 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import kh.sellermoon.member.vo.CartVO;
+
 @Service
 public class CartDao {
 	Logger logger = LoggerFactory.getLogger(CartDao.class);
 
-	@Autowired(required = false)
-	private SqlSessionTemplate sqlSessionTemplate = null;
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
+	
+	private static final String NAMESPACE = "com.mybatis.mapper.cartMapper";
 
 	public List<Map<String, Object>> pro_cartlist(Map<String, Object> pMap) {
 		logger.info("pro_cartList 호출 성공");
 		List<Map<String, Object>> cartList = null;
 		try {
-			sqlSessionTemplate.selectOne("proc_cartlist", pMap);
+			sqlSessionTemplate.selectOne(NAMESPACE+"proc_cartlist", pMap);
 			cartList = (List<Map<String, Object>>)pMap.get("key");
 			// insert here
 			logger.info(cartList.toString());
@@ -46,17 +50,7 @@ public class CartDao {
 		return result;
 	}
 	
-	public List<Map<String, Object>> cartList(Map<String, Object> pMap) {
-		logger.info("cartList 호출 성공");
-		List<Map<String, Object>> cartList = null;
-		try {
-			cartList = sqlSessionTemplate.selectList("cartList", pMap);
-			logger.info(cartList.toString());
-		} catch (DataAccessException e) {
-			logger.info("Exception : "+e.toString());
-		} 
-		return cartList;
-	}
+
 
 	public int getBNo() {
 		logger.info("getBNo 호출 성공");
@@ -150,5 +144,13 @@ public class CartDao {
 			logger.info("Exception: " + e.toString());
 		}
 		return result; 
+	}
+
+	public List<CartVO> getAllCartList(int no) throws Exception{
+		return sqlSessionTemplate.selectList(NAMESPACE+".getAllCartList", no);
+	}
+	
+	public String getCart() throws Exception{
+		return sqlSessionTemplate.selectOne("getCart");
 	}
 }
