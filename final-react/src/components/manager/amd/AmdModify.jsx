@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import Footer from "../../Common/Footer";
-import Header from "../../Common/Header";
+import Header from "../Common/Header";
+import Footer from "../Common/Footer";
 import { jsonAmdList, jsonStoreList } from "../../../service/dbLogic";
 
 const AmdModify = ({ props, pictureUpload }) => {

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { jsonStoreList } from "../../../service/dbLogic";
 import { CONTENTS } from "../../../styles/NoticeStyle";
-import Header from '../Common/Header';
-import Footer from '../Common/Footer';
+import Header from "../Common/Header";
+import Footer from "../Common/Footer";
 import Pagination from "../Common/Pagination";
 import StoreRow from "./StoreRow";
 

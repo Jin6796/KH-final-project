@@ -230,7 +230,6 @@ export const amdInsert = (params) => {
   });
 };
 
-
 /*   Cart     */
 export const getAllCarts = () => {
   return new Promise((resolve, reject) => {
@@ -262,10 +261,9 @@ export const getAllProductAPI = () => {
   });
 };
 
-
 export const getProductDetailAPI = (no) => {
-  const url  = process.env.REACT_APP_SPRING_IP + "product/detail?no="+no;
-  console.log(url)
+  const url = process.env.REACT_APP_SPRING_IP + "product/detail?no=" + no;
+  console.log(url);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -274,6 +272,105 @@ export const getProductDetailAPI = (no) => {
       });
 
       resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const mypoint = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "point/mypoint",
+        params: params,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 마이페이지 정기구독 기본정보 */
+export const subslist = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "subs/subslist",
+        params: params,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 마이페이지 정기구독 배송정보 */
+export const subsdeliver = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "subs/subsdeliver",
+        params: params,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 마이페이지 정기구독 결제정보 */
+export const subspurchase = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "subs/subspurchase",
+        params: params,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+//게시글 전체조회/상세조회/조건검색
+export const jsonBoardList = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const bList = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "admin/board/jsonBoardList",
+        params: params,
+      });
+      resolve(bList);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+// 댓글 전체 조회
+export const jsonReplyList = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const rList = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "admin/board/jsonReplyList",
+        params: params,
+      });
+      resolve(rList);
     } catch (error) {
       reject(error);
     }

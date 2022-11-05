@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../Common/Footer";
-import Header from "../../Common/Header";
+import Footer from "../Common/Footer";
+import Header from "../Common/Header";
 
-const Payment = ({}) => {
-  const navige = useNavigate();
+const Payment = () => {
+  const navigate = useNavigate();
   const [dataVO, setDataVO] = useState({});
+
   useEffect(() => {
     const jquery = document.createElement("script");
     jquery.src = "https://code.jquery.com/jquery-1.12.4.min.js";
@@ -21,7 +22,7 @@ const Payment = ({}) => {
     };
   }, []);
 
-  const onClickPayment = () => {
+  const onClickPayment = (props) => {
     const { IMP } = window;
     IMP.init("imp15502331"); // 가맹점 식별코드 // 결제 데이터 정의
     const data = {
@@ -41,14 +42,13 @@ const Payment = ({}) => {
   };
 
   const callback = (res) => {
-    const { success, merchant_uid, paid_amount } = res;
+    const { success } = res;
     if (success) {
       alert("결제 성공");
       console.log(res);
       console.log(res.merchant_uid);
-
-      //response DB로 보내기
-      //paymentInsert();
+      //navigation.navigate("/payment/result", { ORDER_NO: "res.merchant_uid" })
+      navigate("/payment/result", { state: { ORDER_NO: res.merchant_uid } });
       let list = {
         // json 형태로 spring에 값을 넘김
         ORDER_NO: res.merchant_uid,
@@ -66,23 +66,18 @@ const Payment = ({}) => {
         ORDER_DE_CANCEL: "N",
         DELIVERY_STATUS: "상품준비중",
       };
-      // console.log(e.target.faq_category.value);
-      console.log("paymentInsert => " + JSON.stringify(list));
 
       axios
         .post(process.env.REACT_APP_SPRING_IP + "paymentInsert", list)
         .then((response) => {
           console.log(response);
           console.log(response.data);
-          alert("등록되었습니다!");
-          //window.location.replace("/payment/result");
         })
         .catch((error) => {
           console.log(error);
         });
     }
   };
-
   const handleChangeForm = (e) => {
     if (e.currentTarget == null) return;
     e.preventDefault();
@@ -128,7 +123,7 @@ const Payment = ({}) => {
         <Form.Control
           type="text"
           name="buyer_tel"
-          defaultValue="01012341234"
+          defaultValue="01044246614"
           onChange={handleChangeForm}
         />
       </Form>
@@ -139,11 +134,10 @@ const Payment = ({}) => {
           name="buyer_email"
           defaultValue="example@example.com"
           onChange={handleChangeForm}
-          readOnly
         />
       </Form>
-      <button onClick={handleChangeForm}>저장하기</button>
-      <button onClick={onClickPayment}>결제</button>
+      <Button onClick={handleChangeForm}>저장하기</Button>
+      <Button onClick={onClickPayment}>결제</Button>
       <Footer />
     </>
   );

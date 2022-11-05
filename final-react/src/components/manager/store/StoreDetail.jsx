@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { jsonStoreDetail } from "../../../service/dbLogic";
-import Footer from "../../Common/Footer";
-import Header from "../../Common/Header";
-
+import Header from "../Common/Header";
+import Footer from "../Common/Footer";
 const StoreDetail = () => {
   const navigate = useNavigate();
   const { STORE_NO } = useParams();
