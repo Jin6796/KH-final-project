@@ -1,29 +1,11 @@
 package kh.sellermoon.member.vo;
 
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 public class MemberVO {
 	
-	  private int    member_no       = 0;    
-	  private String member_address  = ""; 
-	  private String member_method   = ""; 
-	  private String member_level    = ""; 
-	  private String member_password = ""; 
-	  private String member_name     = ""; 
-	  private String member_phone    = ""; 
-	  private String member_birth    = ""; 
-	  private String member_zipcode  = ""; 
-	  private String member_email    = ""; 
-	  private String member_date    = "";
-	  private String member_address_detail    = "";
-	  private String member_code    = "";
-	  private String member_recommend    = "";
-	  
-	 private String id;
-	  
-	public int getMember_no() {
+	  public int getMember_no() {
 		return member_no;
 	}
 	public void setMember_no(int member_no) {
@@ -107,13 +89,20 @@ public class MemberVO {
 	public void setMember_recommend(String member_recommend) {
 		this.member_recommend = member_recommend;
 	}
-	@Override
-	public String toString() {
-		return "MemberVO [member_no=" + member_no + ", member_address=" + member_address + ", member_method="
-				+ member_method + ", member_level=" + member_level + ", member_password=" + member_password
-				+ ", member_name=" + member_name + ", member_phone=" + member_phone + ", member_birth=" + member_birth
-				+ ", member_zipcode=" + member_zipcode + ", member_email=" + member_email + ", member_date="
-				+ member_date + ", member_address_detail=" + member_address_detail + ", member_code=" + member_code
-				+ ", member_recommend=" + member_recommend + "]";
-	}
+	private int    member_no       = 0;    
+	  private String member_address  = ""; 
+	  private String member_method   = ""; 
+	  private String member_level    = ""; 
+	  private String member_password = ""; 
+	  private String member_name     = ""; 
+	  private String member_phone    = ""; 
+	  private String member_birth    = ""; 
+	  private String member_zipcode  = ""; 
+	  private String member_email    = ""; 
+	  private String member_date    = "";
+	  private String member_address_detail    = "";
+	  private String member_code    = "";
+	  private String member_recommend    = "";
+	  
+
 }

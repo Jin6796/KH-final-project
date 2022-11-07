@@ -58,7 +58,7 @@ public class StoreController {
 		int result = 0;
 		result = storeLogic.storeInsert(pMap);
 		logger.info(result);
-		return "redirect:http://localhost:3000/store";
+		return "redirect:http://localhost:3000/admin/store";
 	}
 	
 
@@ -79,7 +79,7 @@ public class StoreController {
 		int result = 0;
 		result = storeLogic.storeUpdate(pMap);
 		logger.info(result);
-		final String redirectUrl = "redirect:http://localhost:3000/store";
+		final String redirectUrl = "redirect:http://localhost:3000/admin/store";
 	      return redirectUrl;
 	}
 //	@GetMapping("storeDelete")

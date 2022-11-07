@@ -22,18 +22,29 @@ public class PCartDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	
-	public List<Map<String, Object>> pCartlist(Map<String, Object> pMap) {
-	      logger.info(pMap.get("cart_no")+"");
-	      
+	public List<Map<String, Object>> pCartlist(int no) {
 	      List<Map<String, Object>> pCartlist = null;
-	      pCartlist = sqlSessionTemplate.selectList("getAllPCartList",pMap);
-	         logger.info("pMap : "+pMap);
+	      pCartlist = sqlSessionTemplate.selectList("getAllPCartList",no);
 	         return pCartlist;
 	   }
 	   
-	//public List<CartVO> getAllCarts(int no) {
-	//	List<CartVO> list = sqlSessionTemplate.selectList("getAllPCartList", no);
-	//	logger.info("P-CART "+  list);
-	//	return list;
-	//}
+	public List<Map<String, Object>> getAllCarts(int no) {
+		return sqlSessionTemplate.selectList("getAllPCartList", no);
+	}
+
+	public List<CartVO> getAllCartsVO(Map<String, Object> map) {
+		return sqlSessionTemplate.selectList("getAllPCartListVO", map);
+	}
+	
+	public void insertCart(Map<String, Object> pMap) {
+		sqlSessionTemplate.insert("insertCart", pMap);
+	}
+
+	public void updateCart(Map<String, Object> cartMap) {
+		sqlSessionTemplate.update("updateCart", cartMap);
+	}
+
+	public void deleteCart(Map<String, Object> cartMap) {
+		sqlSessionTemplate.delete("deleteCart", cartMap);
+	}
 }

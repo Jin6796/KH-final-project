@@ -38,8 +38,8 @@ public class SecurityJavaConfig {
             public void addCorsMappings(CorsRegistry registry) {
                registry.addMapping("/**")
                .allowCredentials(true)
-                .allowedOriginPatterns("http://localhost:3005")
-              .allowedMethods(HttpMethod.GET.name(),HttpMethod.POST.name());
+               .allowedOriginPatterns("http://localhost:3005")
+               .allowedMethods(HttpMethod.GET.name(),HttpMethod.POST.name(),HttpMethod.PUT.name(),HttpMethod.DELETE.name());
             }
         };
     }

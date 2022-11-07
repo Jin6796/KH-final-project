@@ -4,9 +4,6 @@ import lombok.Data;
 
 @Data
 public class MailVO {
-	private String address ="";
-	private String title ="";
-	private String message ="";
 	public String getAddress() {
 		return address;
 	}
@@ -25,8 +22,7 @@ public class MailVO {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	@Override
-	public String toString() {
-		return "MailVO [address=" + address + ", title=" + title + ", message=" + message + "]";
-	}
+	private String address ="";
+	private String title ="";
+	private String message ="";
 }

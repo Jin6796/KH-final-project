@@ -44,5 +44,4 @@ private AmdDao amdDao =null;
 		result = amdDao.amdUpdate(pMap);
 		return result;
 	}
-
 }

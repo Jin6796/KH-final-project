@@ -24,7 +24,7 @@ import Amd from "./components/manager/amd/Amd";
 import Order from "./components/manager/order/Order";
 import Board from "./components/manager/board/Board";
 import Store from "./components/manager/store/Store";
-import Cart from "./components/member/cart/Cart";
+import Cart from "./components/member/cart/Carts";
 import Products from "./components/member/product/Products";
 import ProductDetail from "./components/member/product/ProductDetail";
 import { useState } from "react";

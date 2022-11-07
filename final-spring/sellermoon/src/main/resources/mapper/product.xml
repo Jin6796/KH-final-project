@@ -19,12 +19,12 @@
 	</resultMap> 
 
 	<select id="getAllProducts" resultMap="mdMap">
-		select * from tb_md
+		select * from tb_amd
 	</select>
 	
 	
 	<select id="getProductByNo" resultMap="mdMap">
-		select * from tb_md where md_no = #{mdNo}
+		select * from tb_amd where md_no = #{mdNo}
 	</select>
 	
 

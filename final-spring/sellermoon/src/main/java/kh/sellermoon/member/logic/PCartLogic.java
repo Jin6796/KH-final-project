@@ -21,26 +21,22 @@ public class PCartLogic {
 
 	@Autowired
 	private PCartDao pCartDao;
-	
-	
-	  //public List<Map<String, Object>> pCartlist(Map<String, Object> pMap) {
-	//	  logger.info("pointList 호출 성공");
-	 //     List<Map<String, Object>> pointList = null;
-	 //     pointList = pCartDao.pCartlist(pMap);
-	 //     return pCartlist;
-	//   }
 
-
-	public List<Map<String, Object>> pCartlist(Map<String, Object> pMap) {
-		 logger.info("pointList 호출 성공");
-	      List<Map<String, Object>> pCartlist = null;
-	      pCartlist = pCartDao.pCartlist(pMap);
-	      return pCartlist;
+	public List<CartVO> getAllCartsVO(Map<String, Object> pMap) {
+	      return pCartDao.getAllCartsVO(pMap);
 	}
-	  
-	//public List<CartVO> getAllCartList(int no) throws Exception {
-	//	return pCartDao.getAllCarts(no);
-	//}
-	
 
+	public void insertCart(Map<String, Object> pMap) {
+		 pCartDao.insertCart(pMap);
+		
+	}
+	
+	public void updateCart(Map<String, Object> cartMap) {
+		pCartDao.updateCart(cartMap);
+		
+	}
+
+	public void deleteCart(Map<String, Object> cartMap) {
+		pCartDao.deleteCart(cartMap);
+	}
 }

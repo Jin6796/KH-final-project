@@ -18,4 +18,5 @@ public class AmdVO {
 	 String   MD_BRAND         = "";
 	 int   STORE_NO         = 0;
 	 int   ST_AMOUNT         = 0;
+	 
 }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kh.sellermoon.admin.logic.AmdLogic;
 import kh.sellermoon.member.logic.CartLogic;
 import kh.sellermoon.member.logic.ProductLogic;
 import kh.sellermoon.member.vo.MdVO;

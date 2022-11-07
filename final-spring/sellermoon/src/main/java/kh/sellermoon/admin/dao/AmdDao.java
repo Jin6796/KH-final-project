@@ -66,5 +66,4 @@ public class AmdDao {
 		}
 		return result;
 	}
-
 }

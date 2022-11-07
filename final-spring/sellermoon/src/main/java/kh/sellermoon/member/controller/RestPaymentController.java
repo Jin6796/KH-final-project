@@ -39,13 +39,5 @@ public class RestPaymentController {
 	   return ""+result; // 문자열 붙이면 String 타입으로 형전환
 	}   
 	
-	//@PostMapping("paymentInsert")
-	//public String paymentInsert(@RequestParam Map<String, Object> pMap) {
-	//	logger.info("paymentInsert 호출 성공");
-	//	logger.info("pMap");
-	//	int result = 0;
-	//	result = paymentLogic.paymentInsert(pMap);
-	//	logger.info(result+"");
-	//	return "redirect:http://localhost:3000/adimin/paymentresult";
-	//}  
+	
 }

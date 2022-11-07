@@ -44,7 +44,7 @@ public class AmdController {
 			int result = 0;
 			result = amdLogic.amdInsert(pMap);
 			logger.info(result);
-			return "redirect:http://localhost:3000/amd";
+			return "redirect:http://localhost:3000/admin/amd";
 		}  
 	  
 //	   @GetMapping("amdInsert")
@@ -92,7 +92,7 @@ public class AmdController {
 		int result = 0;
 		result = amdLogic.amdDelete(pMap);
 
-		final String redirectUrl = "redirect:http://localhost:3000/amd";
+		final String redirectUrl = "redirect:http://localhost:3000/admin/amd";
 		return redirectUrl;
 	}
 	   @GetMapping("amdUpdate")
@@ -102,7 +102,7 @@ public class AmdController {
 			int result = 0;
 			result = amdLogic.amdUpdate(pMap);
 			logger.info(result);
-			final String redirectUrl = "redirect:http://localhost:3000/amd";
+			final String redirectUrl = "redirect:http://localhost:3000/admin/amd";
 		      return redirectUrl;
 		}
 }
