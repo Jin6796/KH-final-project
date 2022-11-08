@@ -21,30 +21,23 @@ public class PCartDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	
-	public List<Map<String, Object>> pCartlist(int no) {
-	      List<Map<String, Object>> pCartlist = null;
-	      pCartlist = sqlSessionTemplate.selectList("getAllPCartList",no);
-	         return pCartlist;
-	   }
-	   
-	public List<Map<String, Object>> getAllCarts(int no) {
-		return sqlSessionTemplate.selectList("getAllPCartList", no);
-	}
-
-	public List<CartVO> getAllCartsVO(Map<String, Object> map) {
+	public List<CartVO> getAllCartsVO(Map<String, Object> map) throws Exception {
 		return sqlSessionTemplate.selectList("getAllPCartListVO", map);
 	}
 	
-	public void insertCart(Map<String, Object> pMap) {
+	public Map<String, Object> existMdInCart(Map<String, Object> map) throws Exception {
+		return sqlSessionTemplate.selectOne("existMdInCart", map);
+	}
+	
+	public void insertCart(Map<String, Object> pMap) throws Exception {
 		sqlSessionTemplate.insert("insertCart", pMap);
 	}
 
-	public void updateCart(Map<String, Object> cartMap) {
+	public void updateCart(Map<String, Object> cartMap) throws Exception {
 		sqlSessionTemplate.update("updateCart", cartMap);
 	}
 
-	public void deleteCart(Map<String, Object> cartMap) {
+	public void deleteCart(Map<String, Object> cartMap) throws Exception {
 		sqlSessionTemplate.delete("deleteCart", cartMap);
 	}
 }

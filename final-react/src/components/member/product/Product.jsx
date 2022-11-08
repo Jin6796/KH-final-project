@@ -23,54 +23,50 @@ const Product = ({p}) => {
     setProduct(p)
   }, [p]);
 
- const details = (e) => {
-  navigate(`/product/detail?no=${e}`)
- }
- const insertCart = async (e) => {
-  const data = {
-    amdNo : e,
-    orderType: "O",
-    cartQuantity : 1
+  const details = (e) => {
+    navigate(`/product/detail?no=${e}`)
   }
+  const insertCart = async (e) => {
+    const data = {
+      mdNo : e,
+      orderType: "O",
+      cartQuantity : 1
+    }
   
-  await insertCartAPI(data)
-  .then((res) => {
-     if(res.data){
-        setShow(false)
-        setShowSucc(true)
-     }
-  })
+    await insertCartAPI(data)
+    .then((res) => {
+      if(res.data){
+          setShow(false)
+          setShowSucc(true)
+      }
+    })
 }
 
 const goToCart = async () => {
-  navigate(`/cart`)
- 
+  navigate('/cart?type=O')
 }
   return (
     <>
       <div className="product_container">
-      <div className="product_brand">{product.mdBrand}</div>
-      <div className="product_category">{product.mdCategory}</div>
-      <div className="product_name">{product.mdName}</div>
-      <div className="product_content">{product.mdContent}</div>
-      <div className="product_cost">{product.mdCost}</div>
-      <div className="product_price">{product.mdPrice}</div>
-      <div className="product_dc">{product.mdDiscount}</div>
-      <div className="product_amount">{product.stAmout}</div>
-      <div className="product_d_image">
-        <img src={product.mdDetailImageUrl} alt="d-img"/>
+        {/* <div className="product_brand">{product.mdBrand}</div> */}
+        {/* <div className="product_category">{product.mdCategory}</div> */}
+        {/* <div className="product_content">{product.mdContent}</div> */}
+        {/* <div className="product_cost">{product.mdCost}</div> */}
+        <div className="product_image">
+          <img src={product.mdImageUrl} alt="img"/>
+        </div>
+        <div className="product_name">{product.mdName}</div>
+        <div className="product_price">{product.mdPrice}원</div>
+        <div className="product_dc">{product.mdDiscount}%</div>
+        {/* <div className="product_amount">{product.stAmout}</div> */}
+        {/* 디테일 보기는 추후 버튼이 아닌 상품 컨테이너 클릭시 이동하기로 변경  */}
+        <button onClick={() => {details(product.mdNo)}}>상세보기</button>&nbsp;
+        <button onClick={handleShow}>장바구니 담기</button>
       </div>
-      <div className="product_image">
-        <img src={product.mdImageUrl} alt="img"/>
-      </div>
-      {/* 디테일 보기는 추후 버튼이 아닌 상품 컨테이너 클릭시 이동하기로 변경  */}
-      <button onClick={() => {details(product.mdNo)}}>details</button>
-      <button onClick={handleShow}>장바구니 담기</button>
-     </div>
 
 
      {/* =========================== [[ 장바구니 담기 확인 모달 시작 ]] =========================== */}
-     <Modal size="md" show={show} onHide={handleClose} animation={false}>
+      <Modal size="md" show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-md">장바구니 담기</Modal.Title>
         </Modal.Header>
@@ -89,9 +85,9 @@ const goToCart = async () => {
         </Modal.Footer>
       </Modal>
       {/* =========================== [[ 장바구니 담기 확인 모달 종료 ]] =========================== */}
- 
+
       {/* =========================== [[ 장바구니 담기 완료 모달 시작 ]] =========================== */}
-       <Modal size="md" show={showSucc} onHide={handleCloseSucc} animation={false}>
+      <Modal size="md" show={showSucc} onHide={handleCloseSucc} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-md">장바구니로 이동</Modal.Title>
         </Modal.Header>

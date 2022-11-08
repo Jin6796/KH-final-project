@@ -233,12 +233,13 @@ export const amdInsert = (params) => {
 
 
 /*  현재 로그인한 유저의 장바구니 목록 조회   */
-export const getAllMyCartAPI = () => {
+export const getAllMyCartAPI = (type) => {
+  console.log(type)
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
-        url: process.env.REACT_APP_SPRING_IP + "cart",
+        url: process.env.REACT_APP_SPRING_IP + "cart?type="+type,
       });
 
       resolve(response);
@@ -301,12 +302,18 @@ export const deleteCartAPI = (data) => {
 
 
 /*  모든 상품 목록 조회 (카테고라이징, 소팅, 페이징)  */
-export const getAllProductAPI = () => {
+export const getAllProductAPI = (e) => {
+  console.log(e)
   return new Promise((resolve, reject) => {
+    var url = process.env.REACT_APP_SPRING_IP + "product/list";
+    url += "?page=" + e.page
+    url += "&category="+ e.category
+    url += "&sort="+ e.sort
+
     try {
       const response = axios({
         method: "get",
-        url: process.env.REACT_APP_SPRING_IP + "product/list",
+        url: url
       });
 
       resolve(response);

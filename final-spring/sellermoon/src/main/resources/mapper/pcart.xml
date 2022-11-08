@@ -25,7 +25,7 @@
 			(md_price -  (md_price* md_discount * 0.01)) dcprice
 		from 
 			tb_cart c
-			join tb_amd m on C.MD_NO = m.MD_NO
+			join tb_md m on C.MD_NO = m.MD_NO
 		where 
 			c.member_no = #{no}
 		<if test="orderType != null">
@@ -33,9 +33,19 @@
 		</if>	
 	</select>
 	
+	<select id="existMdInCart" resultType="java.util.Map" parameterType="java.util.Map">
+		select 
+			c.cart_quantity cartQuantity, c.cart_no cartNo
+		from 
+			tb_cart  c  
+			join tb_md m on C.MD_NO = m.MD_NO 
+		where 
+			c.member_no = #{memberNo} and m.md_no = #{mdNo} and c.order_type = #{orderType}
+	</select>
+	
 	<insert id="insertCart" parameterType="java.util.Map">
 		insert into tb_cart (cart_no,member_no,md_no,cart_quantity,order_type)
-		values (CART_SEQ.nextval , #{memberNo}, #{amdNo} ,#{cartQuantity}, #{orderType})
+		values (CART_SEQ.nextval , #{memberNo}, #{mdNo} ,#{cartQuantity}, #{orderType})
 	</insert>
 	
 	<update id="updateCart" parameterType="java.util.Map">

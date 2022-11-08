@@ -18,13 +18,17 @@
 		<result property="stAmout"    column="ST_AMOUNT"/>
 	</resultMap> 
 
-	<select id="getAllProducts" resultMap="mdMap">
-		select * from tb_amd
+	<select id="getAllProducts" resultMap="mdMap" parameterType="java.util.Map">
+		select * from tb_md
+		where 1 = 1
+		<if test="category != null">
+			and md_category = #{category}
+		</if>
 	</select>
 	
 	
 	<select id="getProductByNo" resultMap="mdMap">
-		select * from tb_amd where md_no = #{mdNo}
+		select * from tb_md where md_no = #{mdNo}
 	</select>
 	
 

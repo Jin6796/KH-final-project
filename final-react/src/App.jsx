@@ -55,7 +55,7 @@ import AmdModify from "./components/manager/amd/AmdModify";
 import Payment from "./components/member/Payment/Payment";
 import PaymentResult from "./components/member/PaymentResult/PaymentResult";
 
-function App({ authLogic }) {
+function App({ authLogic, pictureUpload }) {
   let [no, setNo] = useState(0); // 회원 번호 담기 props로 넘겨주기 위함
   let [adminId, setAdminId] = useState(""); // 관리자 id담기 props로 넘겨주기 위함
   const [isLogin, setIsLogin] = useState(false); // 로그인 상태 관리
@@ -343,7 +343,13 @@ function App({ authLogic }) {
 
         <Route path="/amember" element={<Customer />} />
 
-        <Route path="/amd" element={<Amd />} />
+        <Route path="/amd" element={
+                            <Amd 
+                              pictureUpload={pictureUpload}
+                              isLogin={isLogin}
+                              isAdmin={isAdmin}
+                            />
+                            } />
 
         <Route path="/aorder" element={<Order />} />
 

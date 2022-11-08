@@ -42,7 +42,7 @@ public class RestCartController {
 	// 로그인한 유저의 모든 장바구니 목록 조회
 	@GetMapping({ "/", "" })
 	public String getAllCartList(HttpServletRequest req, 
-			@RequestParam(required = false, defaultValue="O") String orderType) {
+			@RequestParam(required = false, defaultValue="O") String type) {
 		
 		String result = "";
 		try {
@@ -54,10 +54,10 @@ public class RestCartController {
 			int memberNo = 1;
 			
 			Map<String, Object> map = new HashMap<>();
-			map.put("orderType", orderType);
+			map.put("orderType", type);
 			map.put("no", memberNo);
+			logger.info("map > "+ map);
 			List<CartVO> cartList = pCartLogic.getAllCartsVO(map);
-			
 			Gson g = new Gson();
 			result = g.toJson(cartList);
 
