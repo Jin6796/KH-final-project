@@ -14,7 +14,7 @@ const NaverLogin = (props) => {
   const btnNaver = async () => {
     const naverLogin = await new naver.LoginWithNaverId({
       clientId: "RHVEy9MDa5Qd9ly1kZmA",
-      callbackUrl: "http://localhost:3005/naverlogin",
+      callbackUrl: "http://localhost:3000/naverlogin",
       isPopup: false, // popup 형식으로 띄울것인지 설정
       loginButton: { color: "green", type: 3, height: "45" }, //버튼의 스타일, 타입, 크기를 지정
     });
@@ -35,6 +35,7 @@ const NaverLogin = (props) => {
               sessionStorage.setItem("user_id", res.data.member_email); // 세션에 회원 이메일 저장 브라우저 닫기 전까지 유지
               sessionStorage.setItem("user_name", res.data.member_name); // 세션에 회원 이름 저장
               sessionStorage.setItem("user_no", res.data.member_no); // 세션에 회원 번호 저장
+              sessionStorage.setItem("user_level", res.data.member_level); // 세션에 회원 레벨 저장
               navigate("/");
               window.location.reload();
             });

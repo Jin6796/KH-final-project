@@ -214,7 +214,6 @@ export const jsonAmdList = (params) => {
     }
   });
 };
-
 export const amdInsert = (params) => {
   return new Promise((resolve, reject) => {
     try {
@@ -231,15 +230,14 @@ export const amdInsert = (params) => {
   });
 };
 
-
 /*  현재 로그인한 유저의 장바구니 목록 조회   */
 export const getAllMyCartAPI = (type) => {
-  console.log(type)
+  console.log(type);
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
         method: "get",
-        url: process.env.REACT_APP_SPRING_IP + "cart?type="+type,
+        url: process.env.REACT_APP_SPRING_IP + "cart?type=" + type,
       });
 
       resolve(response);
@@ -256,7 +254,7 @@ export const insertCartAPI = (data) => {
       const response = axios({
         method: "post",
         url: process.env.REACT_APP_SPRING_IP + "cart",
-        data: data
+        data: data,
       });
 
       resolve(response);
@@ -273,7 +271,7 @@ export const updateCartAPI = (data) => {
       const response = axios({
         method: "put",
         url: process.env.REACT_APP_SPRING_IP + "cart",
-        data: data
+        data: data,
       });
 
       resolve(response);
@@ -290,7 +288,7 @@ export const deleteCartAPI = (data) => {
       const response = axios({
         method: "delete",
         url: process.env.REACT_APP_SPRING_IP + "cart",
-        data: data
+        data: data,
       });
 
       resolve(response);
@@ -300,20 +298,19 @@ export const deleteCartAPI = (data) => {
   });
 };
 
-
 /*  모든 상품 목록 조회 (카테고라이징, 소팅, 페이징)  */
 export const getAllProductAPI = (e) => {
-  console.log(e)
+  console.log(e);
   return new Promise((resolve, reject) => {
     var url = process.env.REACT_APP_SPRING_IP + "product/list";
-    url += "?page=" + e.page
-    url += "&category="+ e.category
-    url += "&sort="+ e.sort
+    url += "?page=" + e.page;
+    url += "&category=" + e.category;
+    url += "&sort=" + e.sort;
 
     try {
       const response = axios({
         method: "get",
-        url: url
+        url: url,
       });
 
       resolve(response);
@@ -434,6 +431,210 @@ export const jsonReplyList = (params) => {
         params: params,
       });
       resolve(rList);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+// 리뷰 보기
+export const reviewList = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "onemdallreview",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+// 리뷰 등록
+export const reviewInsert = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "insertreview",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+// 리뷰 수정
+export const reviewModify = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "modreview",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+// 리뷰 수정 위한 view
+export const modReview = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "modviewreview",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+// 리뷰 삭제
+export const reviewDelete = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "delreview",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+// 리뷰 좋아요
+export const likeReview = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "likereview",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+// 마이페이지 리뷰
+export const myReview = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "memreview",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const jsonOrderDetail = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "jsonOrderDetailList",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const jsonOrderDetail2 = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "jsonOrderDetailList2",
+        params: params,
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 주문,결제 - 개별구매 */
+export const paymentlist = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "paymentlist",
+        params: params,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 총결제금액 - 개별구매 */
+export const paytotal = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "paytotal",
+        params: params,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 총결제금액 - 정기구독 */
+export const spaymentlist = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "spaymentlist",
+        params: params,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/* 주문,결제 - 정기구독 */
+export const spaytotal = (params) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "get",
+        url: process.env.REACT_APP_SPRING_IP + "spaytotal",
+        params: params,
+      });
+
+      resolve(response);
     } catch (error) {
       reject(error);
     }

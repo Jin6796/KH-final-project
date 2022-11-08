@@ -12,7 +12,7 @@ import PictureUpload from "./service/pictureUpload";
 
 const authLogic = new AuthLogic(firebaseApp);
 const pictureUpload = new PictureUpload();
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 let store = legacy_createStore(reducer);
 //const auth = useSelector((store) => store.auth)

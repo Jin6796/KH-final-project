@@ -9,3 +9,4 @@ npm i redux
 npm i react-redux
 npm i react-daum-postcode
 npm install sweetalert2
+npm i react-icons
