@@ -35,16 +35,16 @@ public class PCartLogic {
 		// 장바구니에 담긴 특정 상품 개수, cartNo 조회
 		Map<String, Object> existMap = pCartDao.existMdInCart(pMap);
 		logger.info("existMap0:" + existMap);
-		// 이미 장바구니에 해당 상품이 존재한다면
+		// 장바구니에 이미 해당 상품이 존재하니?
 		if(existMap != null) {
-			// cnt = 이미 장바구니에 담은 해당 상품 갯수
+			// 이미 장바구니에 담은 해당 상품 갯수
 			int cnt =  Integer.parseInt(existMap.get("CARTQUANTITY").toString()); 
 			logger.info("cnt:" + cnt);
+			
 			// 새로 담으려는 상품 갯수
 			int quantity = Integer.parseInt(pMap.get("cartQuantity").toString()); 
 			logger.info("quantity:" + quantity);
 			
-			// quantity = quantity + cnt
 			quantity += cnt; 
 
 			pMap.put("quantity", quantity);
@@ -83,12 +83,9 @@ public class PCartLogic {
 			
 			pMap.put("orderNo", orderNumber);
 			pMap.put("startDate", date);
-			
 		
 			pCartDao.insertSubs(pMap);
 		}
-		
-		
 		
 		List<String> arr = (List<String>) pMap.get("cartNo");
 		

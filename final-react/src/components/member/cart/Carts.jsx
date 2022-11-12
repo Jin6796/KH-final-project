@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Card, Modal, Nav } from "react-bootstrap";
 import queryString from 'query-string'
@@ -13,11 +14,13 @@ import { ko } from "date-fns/esm/locale";
 
 const Carts = () => {
   const [carts, setCarts] = useState([]);
+  let   [tab, setTab] = useState(0); // 0이면 0번째 내용 보이게, 1이면 1번째 내용 ...
 
   // get param by queryString
   const location = useLocation();
   const query = queryString.parse(location.search)
 
+  // 페이지 이동을 위한 useNavigate함수
   const navigate = useNavigate();
 
   // 장바구니 타입
@@ -27,6 +30,7 @@ const Carts = () => {
   const [sum, setSum] = useState(0);
   const [shipFee, setShipFee] = useState(0);
   const [priceItems, setPriceItems] = useState([])
+  const [isCalc, setIsCalc] = useState(false)
 
   // 장바구니 타입
   const [orderType, setOrderType] = useState('O')
@@ -42,10 +46,10 @@ const Carts = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  //////////// 구독정보 ////////////
-  // 월경주기 - 기본값 28일
+  // 구독정보
+  // 월경주기
   const [cycle, setCycle] = useState(28);
-  // 배송주기 - 기본값 1주기
+  // 배송주기
   const [period, setPeriod] = useState(1);
   // datepicker
   const [startDate, setStartDate] = useState(new Date());
@@ -76,7 +80,7 @@ const Carts = () => {
 
   // 장바구니 주문
   const orderCart = async() => {
-    const confirm = window.confirm(orderType == 'T' ? '해당 구독 정보로 선택한 상품을 주문하시겠습니까?' : '선택한 상품을 주문하시겠습니까?')
+    const confirm = window.confirm(orderType == 'T' ? '해당 구독 정보로 선택한 장바구니를 주문하시겠습니까?' : '선택한 장바구니를 주문하시겠습니까?')
     const data = {
       orderType : orderType,
       period : period*cycle,
@@ -95,7 +99,7 @@ const Carts = () => {
   }
 
   const cartO = () => {
-    // window.location.href="?type=O" -- 무한로딩 에러발생
+    // window.location.href="?type=O"
     setPriceItems([])
     navigate('/cart?type=O')
     setOrderType('O')
@@ -112,16 +116,16 @@ const Carts = () => {
     setActiveKey('link1')
   }
 
-  // 장바구니 목록 다시 불러오기
+  // 카트 리스트 데이터 다시 불러오기
   const pReload = () => {
     getCartsData();
     setSum(0)
     setPriceItems([])
   }
 
-  // 이 코드는.. 저도 이해 못했어요 
   const pSum = (e) => {
     const arr = [...priceItems];
+
     const i = arr.findIndex(j => j.no === e.no);
     const k = i > -1;
       if (k){
@@ -275,12 +279,15 @@ return (
               <div className="group_form_label">첫 발송일</div>
               <div className="group_form_datePicker"> 
                 <DatePicker
-                  selected={startDate}
+                  selected={startDate}      // Default Date (today)
                   locale={ko}               // 한글로 변경
-                  dateFormat="yyyy.MM.dd"
-                  minDate ={new Date()}     // miminumDate(오늘날짜) 설정
+                  dateFormat="yyyy.MM.dd"   // 시간 포맷 변경
+                  minDate ={new Date()}     // 오늘 날짜 이전은 선택하지 못하게
                   onChange={(date) => setStartDate(date)} 
                 />
+                <div className="js-datePickerContainer date_picker_container" style={{display: "block"}}>
+                  <div className="hasDatepicker"></div>
+                </div>
               </div>
             </div>
           </Card>
@@ -301,24 +308,24 @@ return (
 
       {/* =========================== [[ 장바구니 삭제 완료 모달 시작 ]] =========================== */}
       <Modal size="md" show={show} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-md">장바구니 삭제</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="modal-body-container">
-            <span>해당 장바구니를 삭제하시겠습니까?</span>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={() => {handleSelectDelete()}}>
-            네 
-          </Button>
-          <Button variant="secondary" onClick={handleClose}>
-            아니요
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      {/* =========================== [[ 장바구니 삭제 완료 모달 종료 ]] =========================== */}      
+      <Modal.Header closeButton>
+        <Modal.Title id="example-modal-sizes-title-md">장바구니 삭제</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="modal-body-container">
+          <span>해당 장바구니를 삭제하시겠습니까?</span>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="primary" onClick={() => {handleSelectDelete()}}>
+          네 
+        </Button>
+        <Button variant="secondary" onClick={handleClose}>
+          아니요
+        </Button>
+      </Modal.Footer>
+    </Modal>
+    {/* =========================== [[ 장바구니 삭제 완료 모달 종료 ]] =========================== */}      
     </>
   );
 };
