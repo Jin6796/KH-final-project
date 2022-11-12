@@ -19,11 +19,29 @@
 	</resultMap> 
 
 	<select id="getAllProducts" resultMap="mdMap" parameterType="java.util.Map">
-		select * from tb_md
-		where 1 = 1
-		<if test="category != null">
-			and md_category = #{category}
-		</if>
+		
+			select * from tb_md
+			where 1 = 1
+			<if test="category != null">
+			<choose>
+				<when test="category == '기타'">
+					and md_category not in ('생리대', '탐폰')
+				</when>
+				<otherwise> 
+					and md_category = #{category}
+				</otherwise>
+			</choose>
+			</if>
+			
+			<choose>
+				<when test="sort == 'price'">
+					order by md_price
+				</when>
+				<otherwise> 
+					order by md_name 
+				</otherwise>
+			</choose>
+		
 	</select>
 	
 	

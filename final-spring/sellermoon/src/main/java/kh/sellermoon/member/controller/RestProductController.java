@@ -41,22 +41,23 @@ public class RestProductController {
 	
 	@GetMapping("list")
 	public ResponseEntity<?> getAllProducts(@RequestParam(required = false, defaultValue="2") int page,
-			@RequestParam(required = false, defaultValue="누적판매순") String sort,
-			@RequestParam(required = false, defaultValue="전체") String category) {
+			@RequestParam(required = false, defaultValue="name") String sort,
+			@RequestParam(required = false, defaultValue="전체보기") String category) {
 		String resultJsopStr = "";
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put("page", page);
 			map.put("sort", sort);
-			if(!category.trim().equals("전체")) {
+			if(!category.trim().equals("전체보기")) {
 				map.put("category", category); // 전체가 아닐경우 where절 조건에 추가
 			}
 			
-			logger.info("MAP "+ map);
+			logger.info("조회 조건 : "+ map);
 			
 			List<MdVO> list = productLogic.getProducts(map);
 			Gson g = new Gson();
 			resultJsopStr =  g.toJson(list);
+			logger.info(resultJsopStr);
 			
 		}catch(Exception e) {
 			logger.error("error : " +	e.getStackTrace());

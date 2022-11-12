@@ -103,6 +103,15 @@ public class MemberVO {
 	  private String member_address_detail    = "";
 	  private String member_code    = "";
 	  private String member_recommend    = "";
+	@Override
+	public String toString() {
+		return "MemberVO [member_no=" + member_no + ", member_address=" + member_address + ", member_method="
+				+ member_method + ", member_level=" + member_level + ", member_password=" + member_password
+				+ ", member_name=" + member_name + ", member_phone=" + member_phone + ", member_birth=" + member_birth
+				+ ", member_zipcode=" + member_zipcode + ", member_email=" + member_email + ", member_date="
+				+ member_date + ", member_address_detail=" + member_address_detail + ", member_code=" + member_code
+				+ ", member_recommend=" + member_recommend + "]";
+	}
 	  
 
 }

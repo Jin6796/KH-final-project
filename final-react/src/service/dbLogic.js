@@ -231,13 +231,17 @@ export const amdInsert = (params) => {
 };
 
 /*  현재 로그인한 유저의 장바구니 목록 조회   */
-export const getAllMyCartAPI = (type) => {
-  console.log(type);
+export const getAllMyCartAPI = (type, no) => {
+  const data = {
+    no : no,
+    orderType :type
+  }
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
-        method: "get",
-        url: process.env.REACT_APP_SPRING_IP + "cart?type=" + type,
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "cart/list",
+        data: data
       });
 
       resolve(response);
@@ -283,6 +287,7 @@ export const updateCartAPI = (data) => {
 
 /*  장바구니 삭제   */
 export const deleteCartAPI = (data) => {
+  console.log("deleteNo :" + data)
   return new Promise((resolve, reject) => {
     try {
       const response = axios({
@@ -329,6 +334,23 @@ export const getProductDetailAPI = (no) => {
       const response = axios({
         method: "get",
         url: url,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+/*  장바구니 결제 (정기구독 저장)   */
+export const orderCartAPI = (data) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const response = axios({
+        method: "post",
+        url: process.env.REACT_APP_SPRING_IP + "cart/order",
+        data: data,
       });
 
       resolve(response);

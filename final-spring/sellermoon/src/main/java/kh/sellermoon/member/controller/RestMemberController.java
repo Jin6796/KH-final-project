@@ -41,6 +41,7 @@ public class RestMemberController {
 
 		logger.info("memberLogin 호출 성공");
 		HttpSession session = req.getSession();
+		logger.info("session id : " + session.getId());
 		String temp = null;
 		MemberVO login = memberLogic.memberLogin(mVO);
 		session.setAttribute("member", login);

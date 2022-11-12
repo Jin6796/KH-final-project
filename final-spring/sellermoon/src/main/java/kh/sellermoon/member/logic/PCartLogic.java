@@ -1,6 +1,10 @@
 package kh.sellermoon.member.logic;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -63,5 +67,34 @@ public class PCartLogic {
 
 	public void deleteCart(Map<String, Object> cartMap) throws Exception {
 		pCartDao.deleteCart(cartMap);
+	}
+
+	public void orderCart(Map<String, Object> pMap) throws Exception {
+		String orderType= pMap.get("orderType").toString();
+		
+		if(orderType.equals("T")) {
+			//String orderNumber = pCartDao.getOrderNumber();
+			String orderNumber = "2"; //테이블 연관관계 수정하고 위의 주석 해제, 해당 구문 삭제하기!
+			String date = pMap.get("date").toString();
+			
+			date = date.replace('T', ' ');
+			date = date.replace('Z', ' ');
+			
+			pMap.put("orderNo", orderNumber);
+			pMap.put("startDate", date);
+			
+		
+			pCartDao.insertSubs(pMap);
+		}
+		
+		
+		
+		List<String> arr = (List<String>) pMap.get("cartNo");
+		
+		for(String no : arr) {
+			logger.info(no);
+			pMap.put("cartNo", no);
+			pCartDao.deleteCart(pMap);
+		}
 	}
 }

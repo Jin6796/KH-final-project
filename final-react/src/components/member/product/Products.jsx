@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Button, Form, Modal } from "react-bootstrap";
 import { getAllProductAPI} from "../../../service/dbLogic";
 import Footer from "../Common/Footer";
 import Header from "../Common/Header";
@@ -10,8 +11,8 @@ const Products = () => {
   
   // 페이징, 소팅, 카테고라이징
   const [page, setPage] = useState(1)
-  const [category, setCategory] = useState('전체')
-  const [sort, setSort] = useState('판매순')
+  const [category, setCategory] = useState('전체보기')
+  const [sort, setSort] = useState('name')
 
   // 모든 상품 불러오기 
   const getProduct = async () => {
@@ -20,6 +21,8 @@ const Products = () => {
       category : category,
       sort : sort
     }
+
+    console.log("getProduct", data)
     await getAllProductAPI(data).then((res) => {
       if (res.data === null) {
         return () => {};
@@ -28,9 +31,19 @@ const Products = () => {
       }
     });
   };
-  
-  
 
+  const categoryHandler = (e) => {
+    setCategory(e.target.innerText)
+  }
+
+  const sortHandler = (e) => {
+    setSort(e.target.value)
+  }
+
+  useEffect(() => {
+    getProduct()
+  }, [category, sort]);
+  
   useEffect(() => {
     console.log("useEffet 호출");
     getProduct();
@@ -39,14 +52,28 @@ const Products = () => {
     <>
       <Header />
       <div className="body_container">
-        {products && products.length > 0
-              ? products.map(p => (
-                <div className="product_list_wrap" key={p.mdNo}>
-                  <Product p={p}/>
+        <div className="product_list_category_btn">
+          <button className="product_btn" onClick={categoryHandler}>전체보기</button> &nbsp;
+          <button className="product_btn" onClick={categoryHandler}>생리대</button> &nbsp;
+          <button className="product_btn" onClick={categoryHandler}>탐폰</button> &nbsp;
+          <button className="product_btn" onClick={categoryHandler}>기타</button>
+        </div>
+        <div className="proudct_list_sorting">
+          <Form.Select size="sm" onChange={sortHandler} defaultValue="name">
+            <option value="name" >이름순</option>
+            <option value="price">낮은가격순</option>
+          </Form.Select>
+        </div>
+        <br />
+        <div className="product_list_wrap">
+          {products && products.length > 0
+                ? products.map(p => (
+                  <div className="product_list" key={p.mdNo}>
+                    <Product p={p}/>
                   </div>
-
-                ))
-              : '결과 없음'}
+                  ))
+                : '결과 없음'}
+        </div>
       </div>
       <Footer />
     </>

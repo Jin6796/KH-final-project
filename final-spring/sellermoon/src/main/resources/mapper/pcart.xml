@@ -8,6 +8,7 @@
 		<result property="mdNo"         column="md_no"/>
 		<result property="cartQuantity" column="cart_quantity"/>
 		<result property="orderType"    column="order_type"/>
+		<result property="orderYn"      column="cart_order_yn"/>
 		<association property="mdVO" javaType="kh.sellermoon.member.vo.MdVO">
 	        <id property="mdNo" column="md_no"/>
 	        <result property="mdPrice" column="md_price"/>
@@ -22,12 +23,13 @@
 		select 
 			c.cart_no, c.member_no, c.cart_quantity, c.order_type, 
 			m.md_no, m.md_Image_Url, m.md_discount, m.md_price, m.md_name,
-			(md_price -  (md_price* md_discount * 0.01)) dcprice
+			(md_price -  (md_price* md_discount * 0.01)) dcprice, cart_order_yn
 		from 
 			tb_cart c
 			join tb_md m on C.MD_NO = m.MD_NO
 		where 
 			c.member_no = #{no}
+			and c.cart_order_yn = 'N'
 		<if test="orderType != null">
 			and c.order_type = #{orderType}
 		</if>	
@@ -40,12 +42,15 @@
 			tb_cart  c  
 			join tb_md m on C.MD_NO = m.MD_NO 
 		where 
-			c.member_no = #{memberNo} and m.md_no = #{mdNo} and c.order_type = #{orderType}
+			c.member_no = #{memberNo} 
+			and m.md_no = #{mdNo} 
+			and c.order_type = #{orderType}
+			and c.cart_order_yn = 'N'
 	</select>
 	
 	<insert id="insertCart" parameterType="java.util.Map">
-		insert into tb_cart (cart_no,member_no,md_no,cart_quantity,order_type)
-		values (CART_SEQ.nextval , #{memberNo}, #{mdNo} ,#{cartQuantity}, #{orderType})
+		insert into tb_cart (cart_no,member_no,md_no,cart_quantity,order_type, cart_order_yn)
+		values (CART_SEQ.nextval , #{memberNo}, #{mdNo} ,#{cartQuantity}, #{orderType}, 'N')
 	</insert>
 	
 	<update id="updateCart" parameterType="java.util.Map">
@@ -58,11 +63,27 @@
 			and member_no = #{memberNo}
 	</update>
 
-	<delete id="deleteCart" parameterType="java.util.Map">
-		delete from 
+	<update id="deleteCart" parameterType="java.util.Map">
+		update 
 			tb_cart 
+		set 
+			cart_order_yn = 'Y'	
 		where 
 			cart_no = #{cartNo}
-			and member_no = #{memberNo} 
-	</delete>
+			and member_no = #{memberNo}
+	</update>
+
+	<select id="getOrderNumber" resultType="String">
+		SELECT * 
+		FROM (SELECT order_no 
+		      FROM tb_order 
+		      ORDER BY order_date DESC) 
+		<![CDATA[ WHERE ROWNUM <= 1 ]]> 
+	</select>
+
+	<insert id="insertSubs" parameterType="java.util.Map">
+		insert into tb_subs (sub_no, order_no, member_no, sub_start, sub_end, sub_period)
+		values (subs_seq.nextval , #{orderNo}, #{memberNo} ,#{startDate}, null, #{period})
+	</insert>
+	
 </mapper>

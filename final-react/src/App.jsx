@@ -59,6 +59,7 @@ import MyReview from "./components/member/mypage/MyReview";
 import OrderD from "./components/member/orderdetail/OrderD";
 import OrderPage from "./components/member/Payment/OrderPage";
 import SorderPage from "./components/member/Payment/SorderPage";
+import Carts from "./components/member/cart/Carts";
 
 function App({ authLogic, pictureUpload }) {
   let [no, setNo] = useState(0); // 회원 번호 담기 props로 넘겨주기 위함
@@ -306,7 +307,7 @@ function App({ authLogic, pictureUpload }) {
         />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<Carts />} />
         <Route
           exact={true}
           path="/review"

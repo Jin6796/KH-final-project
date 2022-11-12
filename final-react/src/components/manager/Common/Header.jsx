@@ -31,6 +31,7 @@ const Header = () => {
   */
   let navigate = useNavigate();
   const sellerMoon = () => {
+    window.location.href="/"
     console.log("에휴");
   }
   const logout = () => {

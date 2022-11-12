@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { Button, Modal } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Card, Modal, Nav } from "react-bootstrap";
 import queryString from 'query-string'
-import { getAllMyCartAPI, deleteCartAPI  } from "../../../service/dbLogic";
+import { getAllMyCartAPI, deleteCartAPI, orderCartAPI  } from "../../../service/dbLogic";
 import Cart from "./Cart";
 import Header from "../Common/Header";
 import Footer from "../Common/Footer";
+import { TABTITLE } from "../../../styles/MainStyle";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css'
+import { ko } from "date-fns/esm/locale";
 
 const Carts = () => {
   const [carts, setCarts] = useState([]);
-  
+  let   [tab, setTab] = useState(0); // 0이면 0번째 내용 보이게, 1이면 1번째 내용 ...
+
   // get param by queryString
   const location = useLocation();
   const query = queryString.parse(location.search)
+
+  // 페이지 이동을 위한 useNavigate함수
+  const navigate = useNavigate();
 
   // 장바구니 타입
   const type = query.type;
@@ -21,6 +29,13 @@ const Carts = () => {
   // 장바구니 금액정보
   const [sum, setSum] = useState(0);
   const [shipFee, setShipFee] = useState(0);
+  const [priceItems, setPriceItems] = useState([])
+  const [isCalc, setIsCalc] = useState(false)
+
+  // 장바구니 타입
+  const [orderType, setOrderType] = useState('O')
+  const [isSubscribe, setIsSubscribe] = useState(false)
+  const [activeKey, setActiveKey] = useState('link1')
   
   // 체크박스
   const[checkItems, setCheckItems] = useState([])
@@ -31,31 +46,105 @@ const Carts = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // 구독정보
+  // 월경주기
+  const [cycle, setCycle] = useState(28);
+  // 배송주기
+  const [period, setPeriod] = useState(1);
+  // datepicker
+  const [startDate, setStartDate] = useState(new Date());
 
+  const userno = window.sessionStorage.getItem("user_no")
+
+  // 장바구니 불러오기
   const getCartsData = async () => {
-    await getAllMyCartAPI(type).then((res) => {
-      if (res.data === null) {
-        return () => {};
-      } else {
-        setCarts(res.data)
-      }
+    if(userno){
+      await getAllMyCartAPI(orderType, userno).then((res) => {
+        if (res.data === null) {
+          return () => {};
+        } else {
+          setCarts(res.data)
+        }
+      });
+    }
+  };
+
+  // 장바구니 삭제
+  const deleteCart = async (e) => {
+    console.log(e)
+    await deleteCartAPI(e).then(() => {
+      setShow(false)
+      pReload()
     });
   };
+
+  // 장바구니 주문
+  const orderCart = async() => {
+    const confirm = window.confirm(orderType == 'T' ? '해당 구독 정보로 선택한 장바구니를 주문하시겠습니까?' : '선택한 장바구니를 주문하시겠습니까?')
+    const data = {
+      orderType : orderType,
+      period : period*cycle,
+      date : startDate,
+      memberNo : userno,
+      cartNo: checkItems
+    }
+
+    if(confirm){
+      await orderCartAPI(data).then(() => {
+        setCycle(28)
+        setPeriod(1 * 28);
+        pReload()
+      });
+    }
+  }
+
+  const cartO = () => {
+    // window.location.href="?type=O"
+    setPriceItems([])
+    navigate('/cart?type=O')
+    setOrderType('O')
+    setIsSubscribe(false)
+    setActiveKey('link0')
+  }
+
+  const cartT = () => {
+    // window.location.href="?type=T"
+    setPriceItems([])
+    navigate('/cart?type=T')
+    setOrderType('T')
+    setIsSubscribe(true)
+    setActiveKey('link1')
+  }
 
   // 카트 리스트 데이터 다시 불러오기
   const pReload = () => {
     getCartsData();
     setSum(0)
+    setPriceItems([])
   }
 
   const pSum = (e) => {
-    setSum(sum => e + sum)
+    const arr = [...priceItems];
+
+    const i = arr.findIndex(j => j.no === e.no);
+    const k = i > -1;
+      if (k){
+        console.log("update", e)
+       // setPriceItems(arr)
+        if(arr[i].sum != e.sum){
+        arr[i] = {...arr[i], sum: e.sum};
+        setPriceItems(arr)
+        }
+      }else if (e.sum > 0){
+        arr.push(e);
+        console.log("push", e)
+        setPriceItems((prevArr) => ([...prevArr, e]));
+      }
   }
   
 // 체크박스 단일 개체 선택
 const handleSingleCheck = (checked, id) => {
   setAllCheck(false)
-  console.log(allCheck, checked)
   if (checked) {
     setCheckItems([...checkItems, id]);
   } else {
@@ -85,24 +174,38 @@ const handleAllCheck = () => {
 }
 
 const handleSelectDelete = () => {
-  checkItems.forEach( e => deleteCartAPI({cartNo : e})
-  .then(() => pReload())) 
-  setShow(false)
+  checkItems.forEach( e => deleteCart({cartNo:e, memberNo: userno}))
 }
 
 useEffect(() => {
-  console.log("useEffet 호출");
   getCartsData();
-}, []);
+}, [orderType]);
 
 useEffect(() => {
-  const idArray = [];
-  carts.forEach((el) => idArray.push(el.cartNo));
-  setCheckItems(idArray);
+  setOrderType(type)
+  const isT = type==='T';
+  console.log(isT)
+  setIsSubscribe(isT)
+  setActiveKey(isT ? 'link1' : 'link0')
+}, [type]);
+
+useEffect(() => {
+  console.log("priceItems", priceItems)
+  if(priceItems.length > 0){
+    const sumWithInitial = priceItems.reduce((acc, obj) => { return acc + obj.sum }, 0);
+    setSum(sumWithInitial)
+  }
+}, [priceItems]);
+
+useEffect(() => {
+  if(carts.length > 0){
+    const idArray = [];
+    carts.forEach((el) => idArray.push(el.cartNo));
+    setCheckItems(idArray);
+  }
 }, [carts]);
 
 useEffect(() => {
-  
   // 개별구매 총액이 30000원 이상이거나 정기배송일 경우 배송비 0원
   setShipFee((sum < 30000) &&  type != 'T'? 3000 : 0)
 }, [sum]);
@@ -110,29 +213,94 @@ useEffect(() => {
 return (
     <>
       <Header />
-      <div className="body_container">
+      <div className="body_container" style={{padding:10}}>
+        <Nav fill variant="tabs" activeKey={activeKey} >
+          <Nav.Item>
+            <Nav.Link onClick={cartO} eventKey="link0">
+              <TABTITLE>개별구매</TABTITLE>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link onClick={cartT} eventKey="link1">
+              <TABTITLE>정기구독</TABTITLE>
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
         <div>
-          <div className="cart_list_container">
-            {carts && carts.length > 0 
-              ? carts.map( c => (
-              <div className="cart_list_wrapper" key={c.cartNo}>
-                <input type="checkbox" value={c.cartNo} checked={checkItems.includes(c.cartNo)} onChange={(e) => handleSingleCheck(e.target.checked, c.cartNo)}/>
-                 <Cart c={c} pReload={pReload} pSum={pSum}/>  
-            </div>
-            )) : "장바구니가 비어있습니다."} 
-          </div>
+          <table>
+            <thead>
+              <tr className="text-center">
+                <th>&nbsp;&nbsp;</th>
+                <th>상품정보</th>
+                <th>판매가</th>
+                <th>수량</th>
+                <th>구매가</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody className="cart_table_body">
+              {carts && carts.length > 0 
+                ? carts.map( c => (
+                <tr className="cart_list_wrapper" key={c.cartNo}>
+                  <input className="tbody_check" type="checkbox" value={c.cartNo} checked={checkItems.includes(c.cartNo)} onChange={(e) => handleSingleCheck(e.target.checked, c.cartNo)}/>
+                    <Cart c={c} pReload={pReload} pSum={pSum} isCk={checkItems}/><hr/>
+                </tr>
+                )) : "장바구니가 비어있습니다."} 
+            </tbody>
+          </table>
         </div>
         <div className="cart_list_footer">
           <div className="cart_list_btn_container"> 
-            <button className="cart_list_all" onClick={handleAllCheck}>전체 선택</button> 
-            <button className="cart_list_delete" onClick={handleShow}>선택 삭제</button>
-          </div>
-          <div className="cart_list_sum_price_container">
+            <button className="cart_selectBtn" onClick={handleAllCheck}>전체 선택</button>&nbsp;
+            <button className="cart_selectBtn" onClick={handleShow}>선택 삭제</button>
+          </div><br/>
+          {/* 월경 주기일 입력 시작 */}
+          {isSubscribe && 
+          <Card className="cart_subscribe">
+            <div className="group_form_row">
+              <div className="group_form_label">월경주기</div>
+              <div className="group_form_input">
+                <input id="js-cycle" name="cycle" inputMode="numeric" onChange={(e) => {setCycle(e.target.value)}}
+                        placeholder="숫자" max={365} maxLength="3" value={cycle}/>일
+              </div><br/>
+            </div>
+            <div className="group_form_row group_select">
+              <div className="group_form_label">배송주기</div>
+              <select name="multiple" id="js-multiple" onChange={(e) =>{setPeriod(e.target.value)} }>
+                <option selected disabled>선택해주세요</option>
+                <option value="1">1주기마다 ({cycle}일마다)</option>
+                <option value="2">2주기마다 ({cycle*2}일마다)</option>
+                <option value="3">3주기마다 ({cycle*3}일마다)</option>  
+              </select>
+            </div><br/>
+            <div className="group_form_ros">
+              <div className="group_form_label">첫 발송일</div>
+              <div className="group_form_datePicker"> 
+                <DatePicker
+                  selected={startDate}      // Default Date (today)
+                  locale={ko}               // 한글로 변경
+                  dateFormat="yyyy.MM.dd"   // 시간 포맷 변경
+                  minDate ={new Date()}     // 오늘 날짜 이전은 선택하지 못하게
+                  onChange={(date) => setStartDate(date)} 
+                />
+                <div className="js-datePickerContainer date_picker_container" style={{display: "block"}}>
+                  <div className="hasDatepicker"></div>
+                </div>
+              </div>
+            </div>
+          </Card>
+          }
+          {/* 월경 주기일 입력 끝 */}
+
+          <Card className="cart_list_sum_price_container" style={{backgroundColor: "#f9f9f6"}}>
             <div className="cart_list_price">총 상품 금액 : {sum}원</div>
-            <div className="cart_list_ship_fee">배송비 : {shipFee}원</div>
-            <div className="cart_list_sum">총 주문금액 : {sum +shipFee}원</div>   
-          </div>
+            <div className="cart_list_ship_fee">배송비 : {shipFee}원</div><hr />
+            <div className="cart_list_sum">총 주문 금액 : {sum +shipFee}원</div><br />
+            <Button onClick={orderCart} style={{height:50, color: "black", backgroundColor: "white", borderColor: "lightgray"}}>선택 상품 주문하기</Button>
+          </Card>
+
         </div>
+        
       </div>
       <Footer />
 
@@ -147,11 +315,11 @@ return (
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          취소
-        </Button>
         <Button variant="primary" onClick={() => {handleSelectDelete()}}>
-          삭제 
+          네 
+        </Button>
+        <Button variant="secondary" onClick={handleClose}>
+          아니요
         </Button>
       </Modal.Footer>
     </Modal>

@@ -57,7 +57,7 @@ const Header = ({ isLogin, logout, no, isAdmin }) => {
                 className="btn position-relative"
                 id="nav-btn"
                 onClick={() => {
-                  navigate("/cart");
+                  navigate("/cart?type=O");
                 }}
               >
                 {" "}
