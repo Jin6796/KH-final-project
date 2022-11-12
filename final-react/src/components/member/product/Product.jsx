@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Modal } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
 import { insertCartAPI } from "../../../service/dbLogic";
-import Pagination from "./../Common/Pagination";
 
 const Product = ({p}) => {
   const [product, setProduct] = useState([]);
 
-  // 페이지 이동을 위한 useNavigate 함수 이용
   const navigate = useNavigate();
 
   const userNo = window.sessionStorage.getItem("user_no");
@@ -20,11 +18,9 @@ const Product = ({p}) => {
   // 장바구니 담은 후 성공 메세지 & 장바구니 페이지로 이동 모달
   const [showSucc, setShowSucc] = useState(false);
   const handleCloseSucc = () => setShowSucc(false);
-  const handleShowSucc = () => setShowSucc(true);
   // 로그인 유도 모달
   const [showLogin, setShowLogin] = useState(false);
   const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);  
   
   useEffect(() => {
     setProduct(p)
@@ -54,7 +50,7 @@ const Product = ({p}) => {
   }
 
 const goToCart = async () => {
-  navigate('/cart')
+  navigate('/cart?type=O')
 }
   return (
     <>
@@ -68,7 +64,6 @@ const goToCart = async () => {
           <Card.Text className="product_price" style={{marginLeft:10, textAlign:"end"}}>{product.mdPrice}원</Card.Text>
           <Card.Title className="product_discount" style={{marginLeft:10, textAlign:"end"}}>{product.mdDiscount}% &nbsp; {product.mdPrice*((100-product.mdDiscount)/100)}원</Card.Title><br />
         </div>
-        {/* 디테일 보기는 추후 버튼이 아닌 상품 컨테이너 클릭시 이동하기로 변경  */}
         <button className="product_btn" style={{marginLeft: 120}} onClick={handleShow}>장바구니 담기</button>
       </div>
 
@@ -124,7 +119,7 @@ const goToCart = async () => {
       </Modal.Header>
       <Modal.Footer>
         <Button variant="primary" onClick={() => {goLoginPage()}}>
-          로그인 
+          로그인하기
         </Button>
         <Button variant="secondary" onClick={handleCloseLogin}>
           취소

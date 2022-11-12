@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { getAllProductAPI} from "../../../service/dbLogic";
 import Footer from "../Common/Footer";
 import Header from "../Common/Header";
@@ -9,7 +8,7 @@ import Product from "./Product";
 const Products = () => {
   const [products, setProducts] = useState([]);
   
-  // 페이징, 소팅, 카테고라이징
+  // 페이징, 정렬, 카테고라이징
   const [page, setPage] = useState(1)
   const [category, setCategory] = useState('전체보기')
   const [sort, setSort] = useState('name')
@@ -48,6 +47,7 @@ const Products = () => {
     console.log("useEffet 호출");
     getProduct();
   }, []);
+
   return (
     <>
       <Header />
@@ -72,7 +72,7 @@ const Products = () => {
                     <Product p={p}/>
                   </div>
                   ))
-                : '결과 없음'}
+                : '상품 준비 중'}
         </div>
       </div>
       <Footer />

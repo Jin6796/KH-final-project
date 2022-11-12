@@ -74,7 +74,8 @@ public class PCartLogic {
 		
 		if(orderType.equals("T")) {
 			//String orderNumber = pCartDao.getOrderNumber();
-			String orderNumber = "2"; //테이블 연관관계 수정하고 위의 주석 해제, 해당 구문 삭제하기!
+			//테이블 연관관계 수정되면 위의 주석 해제, 아래 구문 삭제하기! -- 지금은 상수 값 "2"으로 박아놓음...
+			String orderNumber = "2"; 
 			String date = pMap.get("date").toString();
 			
 			date = date.replace('T', ' ');

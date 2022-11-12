@@ -12,18 +12,10 @@ const ProductDetail = ({  }) => {
   const [dcPrice, setDcPrice] = useState(0);
   const [sum, setSum] = useState(1);
   const [type, setType] = useState('')
-  // 장바구니 담기 전 확인 메세지 모달 
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => {if(userNo){setShow(true)}else{setShowLogin(true)}};
-  // 장바구니 담은 후 성공 메세지 & 장바구니 페이지로 이동 모달
-  // const [showSucc, setShowSucc] = useState(false);
-  // const handleCloseSucc = () => setShowSucc(false);
-  // const handleShowSucc = () => setShowSucc(true);
+
   // 로그인 유도 모달
   const [showLogin, setShowLogin] = useState(false);
   const handleCloseLogin = () => setShowLogin(false);
-  const handleShowLogin = () => setShowLogin(true);  
     
   const location = useLocation();
   const navigate = useNavigate();
@@ -63,12 +55,8 @@ console.log(data)
   await insertCartAPI(data)
   .then((res) => {
     if(res.data){
-        //setShow(false)
-        //setShowSucc(true)
-
-        alert('장바구니에 상품이 담겼습니다.')
-
-        setQuantity(1)
+      alert('장바구니에 상품이 담겼습니다.')
+      setQuantity(1)
     }
   })
 }
@@ -95,7 +83,6 @@ useEffect(() => {
         } else {
           setProduct(res.data);
           const price=res.data.mdPrice*((100-res.data.mdDiscount)/100);
-          
           setDcPrice(price)
           setSum(price)
         }
@@ -103,6 +90,7 @@ useEffect(() => {
     };
     getProductDetail();
   }, []);
+  
   return (
     <>
     <Header />

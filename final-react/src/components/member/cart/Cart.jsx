@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Modal, Nav } from "react-bootstrap";
 import { deleteCartAPI , updateCartAPI} from "../../../service/dbLogic";
-import Pagination from "./../Common/Pagination";
 
 const Cart = ({c, pReload, pSum, isCk}) => {
   const [cart, setCart] = useState({});
@@ -38,13 +37,7 @@ useEffect(() => {
   }else {
     pSum({no: c.cartNo, sum : sum})
   }
-  
   }, [isCk]);
-
-  // useEffect(() => {
-  //   pSum(sum)
-  //   console.log("useEffect sum ", sum)
-  // }, [sum]);
 
   // API 호출 함수
   const deleteCart = async (e) => {
@@ -78,7 +71,7 @@ const updateCart = async (e) => {
   })
 }
 
-// 옵션값 변경 시 호출되는 함수
+// 옵션값 변경 시 호출
 const handleOption = (q) => {
   updateCart(q)
   setQuantity(q)
@@ -117,38 +110,7 @@ return (
         {sum}원
       </td>
       <td className="td_center"><button onClick={handleShow} className="td_btn" style={{fontSize:16}}>삭제</button></td>
-      {/* <div className="cart_container">
-        <div className="cart_left">
-          <div className="cart_md_image">
-            <img src={md.mdImageUrl} alt="img" style={{width:250}}/>
-          </div>  
-        </div>
-        <Card className="cart_right">
-          <div className="cart_md_name">
-            {md.mdName}
-          </div>
-          <div className="cart_md_price">
-            정가: {md.mdPrice}
-          </div>
-          <div className="cart_md_discount">
-            할인(%): {md.mdDiscount}
-          </div>  
-          <div className="cart_md_dcprice">
-            할인가: {md.mdDcPrice}
-          </div>  
-          <div className="cart_sum">
-            총액: {sum}
-          </div>  
-          <div className="cart_qtt">
-            {quantity}
-            <button onClick={ handleIncre}>+</button>
-            <button onClick={handleDecre}>-</button>
-          </div>
-          <div className="cart_btn_container">
-            <button onClick={handleShow}>삭제</button>
-          </div>
-        </Card>
-      </div> */}
+
       {/* =========================== [[ 장바구니 삭제 완료 모달 시작 ]] =========================== */}
       <Modal size="md" show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
