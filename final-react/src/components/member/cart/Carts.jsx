@@ -258,7 +258,9 @@ return (
           {isSubscribe && 
           <Card className="cart_subscribe">
             <div className="group_form_row">
-              <div className="group_form_label">월경주기</div>
+              <div className="group_form_label">
+                월경주기&nbsp;&nbsp;&nbsp;
+              </div>
               <div className="group_form_input">
                 <input id="js-cycle" name="cycle" inputMode="numeric" onChange={(e) => {setCycle(e.target.value)}}
                         placeholder="숫자" max={365} maxLength="3" value={cycle}/>일
