@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Card, Modal, Nav } from "react-bootstrap";
 import queryString from 'query-string'
@@ -14,13 +13,9 @@ import { ko } from "date-fns/esm/locale";
 
 const Carts = () => {
   const [carts, setCarts] = useState([]);
-  let   [tab, setTab] = useState(0); // 0이면 0번째 내용 보이게, 1이면 1번째 내용 ...
 
-  // get param by queryString
   const location = useLocation();
   const query = queryString.parse(location.search)
-
-  // 페이지 이동을 위한 useNavigate함수
   const navigate = useNavigate();
 
   // 장바구니 타입
@@ -30,7 +25,6 @@ const Carts = () => {
   const [sum, setSum] = useState(0);
   const [shipFee, setShipFee] = useState(0);
   const [priceItems, setPriceItems] = useState([])
-  const [isCalc, setIsCalc] = useState(false)
 
   // 장바구니 타입
   const [orderType, setOrderType] = useState('O')
@@ -46,10 +40,10 @@ const Carts = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // 구독정보
-  // 월경주기
+  //////////// 구독정보 저장하기 ///////////
+  // 월경주기 - 기본값 28일
   const [cycle, setCycle] = useState(28);
-  // 배송주기
+  // 배송주기 - 기본 주기 1주기
   const [period, setPeriod] = useState(1);
   // datepicker
   const [startDate, setStartDate] = useState(new Date());
@@ -80,7 +74,7 @@ const Carts = () => {
 
   // 장바구니 주문
   const orderCart = async() => {
-    const confirm = window.confirm(orderType == 'T' ? '해당 구독 정보로 선택한 장바구니를 주문하시겠습니까?' : '선택한 장바구니를 주문하시겠습니까?')
+    const confirm = window.confirm(orderType == 'T' ? '해당 구독 정보로 선택한 상품을 주문하시겠습니까?' : '선택한 상품을 주문하시겠습니까?')
     const data = {
       orderType : orderType,
       period : period*cycle,
