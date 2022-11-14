@@ -71,8 +71,8 @@
 	</select>
 
 	<insert id="insertSubs" parameterType="java.util.Map">
-		insert into tb_subs (sub_no, order_no, member_no, sub_start, sub_end, sub_period)
-		values (subs_seq.nextval , #{orderNo}, #{memberNo} ,#{startDate}, null, #{period})
+		insert into tb_subs (sub_no, member_no, sub_start, sub_end, sub_period, order_no)
+		values (subs_seq.nextval, #{memberNo} ,#{startDate}, null, #{period}, #{orderNo})
 	</insert>
 	
 </mapper>

@@ -248,7 +248,7 @@ return (
             <button className="cart_selectBtn" onClick={handleAllCheck}>전체 선택</button>&nbsp;
             <button className="cart_selectBtn" onClick={handleShow}>선택 삭제</button>
           </div><br/>
-          {/* 월경 주기일 입력 시작 */}
+          {/*======= 월경 주기일 입력 시작 =======*/}
           {isSubscribe && 
           <Card className="cart_subscribe">
             <div className="group_form_row">
@@ -279,14 +279,11 @@ return (
                   minDate ={new Date()}     // 오늘 날짜 이전은 선택하지 못하게
                   onChange={(date) => setStartDate(date)} 
                 />
-                <div className="js-datePickerContainer date_picker_container" style={{display: "block"}}>
-                  <div className="hasDatepicker"></div>
-                </div>
               </div>
             </div>
           </Card>
           }
-          {/* 월경 주기일 입력 끝 */}
+          {/*======= 월경 주기일 입력 끝 =======*/}
 
           <Card className="cart_list_sum_price_container" style={{backgroundColor: "#f9f9f6"}}>
             <div className="cart_list_price">총 상품 금액 : {sum}원</div>
