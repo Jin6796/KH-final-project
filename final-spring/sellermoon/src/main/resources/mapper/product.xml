@@ -35,7 +35,7 @@
 			
 			<choose>
 				<when test="sort == 'price'">
-					ORDER BY MD_PRICE
+					ORDER BY MD_PRICE*(100-MD_DISCOUNT)/100
 				</when>
 				<otherwise> 
 					ORDER BY MD_NAME 
